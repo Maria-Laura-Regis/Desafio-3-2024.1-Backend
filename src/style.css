@@ -1,24 +1,268 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  font-family: "Roboto", sans-serif;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-div.pageContent {
-  margin-top: 5em;
-  height: 100%;
-  text-align: center;
+/* Efeito de textura azul no fundo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.03) 10px,
+            rgba(255, 255, 255, 0.03) 20px
+        );
+    pointer-events: none;
 }
 
-img.img_sprite_front_default {
-  width: 96px;
-  height: 96px;
-  margin-block: 1em;
+.container {
+    text-align: center;
+    background: transparent;
+    padding: 30px;
+    max-width: 550px;
+    width: 90%;
+    position: relative;
+    z-index: 1;
 }
 
-button#previous,
-button#next {
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
-  font-size: 18px;
+h1 {
+    color: #ffcb05;
+    margin-bottom: 30px;
+    font-size: 3em;
+    text-shadow: 
+        3px 3px 0px #003a70,
+        -1px -1px 0px #003a70,
+        1px -1px 0px #003a70,
+        -1px 1px 0px #003a70,
+        4px 4px 8px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-style: italic;
+    transform: skew(-5deg);
+}
+
+.pokedex {
+    background: linear-gradient(to bottom, #e8f4f8 0%, #ffffff 100%);
+    border-radius: 15px;
+    padding: 0;
+    border: 8px solid #1e3a8a;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Borda amarela interna estilo carta */
+.pokedex::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 3px solid #ffcb05;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pokemon-display {
+    background: 
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, transparent 70%),
+        linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border-radius: 10px;
+    padding: 30px;
+    margin: 15px;
+    position: relative;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Efeito de vórtice azul no fundo (como as cartas) */
+.pokemon-display::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle, transparent 30%, rgba(59, 130, 246, 0.1) 31%, rgba(59, 130, 246, 0.1) 32%, transparent 33%),
+        radial-gradient(circle, transparent 40%, rgba(59, 130, 246, 0.05) 41%, rgba(59, 130, 246, 0.05) 42%, transparent 43%),
+        radial-gradient(circle, transparent 50%, rgba(59, 130, 246, 0.03) 51%, rgba(59, 130, 246, 0.03) 52%, transparent 53%);
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: swirl 20s linear infinite;
+    z-index: 0;
+}
+
+@keyframes swirl {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.pokemon-image {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.pokemon-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px); 
+    }
+    50% { 
+        transform: translateY(-20px); 
+    }
+}
+
+.pokemon-info {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: 2px solid #1e3a8a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-info h2 {
+    color: #1e3a8a;
+    font-size: 2.2em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(255, 203, 5, 0.5);
+}
+
+.pokemon-info p {
+    color: #64748b;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.navigation {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(to bottom, #ffffff 0%, #e8f4f8 100%);
+    border-radius: 0 0 7px 7px;
+}
+
+.btn {
+    background: linear-gradient(to bottom, #ffcb05 0%, #f59e0b 100%);
+    color: #1e3a8a;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 4px solid #1e3a8a;
+    box-shadow: 
+        0 6px 0 #003a70,
+        0 8px 12px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    top: 0;
+}
+
+.btn:hover {
+    background: linear-gradient(to bottom, #fde047 0%, #ffcb05 100%);
+    top: 2px;
+    box-shadow: 
+        0 4px 0 #003a70,
+        0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+    top: 6px;
+    box-shadow: 
+        0 0 0 #003a70,
+        0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn:disabled {
+    background: linear-gradient(to bottom, #94a3b8 0%, #64748b 100%);
+    color: #e2e8f0;
+    cursor: not-allowed;
+    top: 0;
+    box-shadow: 
+        0 4px 0 #475569,
+        0 6px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.6;
+}
+
+.loading {
+    opacity: 0.6;
+}
+
+/* Símbolo Pokémon no topo */
+.pokedex::after {
+    content: '⚪';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5em;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+    }
+    
+    .pokemon-image img {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    
+    .pokemon-info h2 {
+        font-size: 1.8em;
+    }
 }
